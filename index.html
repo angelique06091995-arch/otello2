@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Отелло · Как мы говорим</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FF4D90;
+    --lime:#A7FC26;
+    --forest:#084008;
+    --ink:#171A16;
+    --font-body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-body);
+    background:#FFFFFF;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.01ms !important;}
+  }
+
+  .page{
+    width:100%;
+    max-width:1400px;
+    margin:0 auto;
+    padding:clamp(12px,2.5vw,28px) clamp(12px,2.5vw,28px) clamp(16px,3vw,32px);
+  }
+
+  .stack{
+    display:flex;
+    flex-direction:column;
+    gap:clamp(8px,1.4vw,14px);
+  }
+
+  .flip-face{
+    width:100%;
+    min-height:64px;
+    border-radius:999px;
+    padding:clamp(14px,2.2vw,20px) clamp(18px,3vw,34px);
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+    user-select:none;
+    background:var(--pink);
+    transition:background-color .15s ease;
+  }
+  .flip-face:hover{filter:brightness(1.04);}
+  .flip-face:active{filter:brightness(0.97);}
+
+  .flip-face.state-pink{background:var(--pink);}
+  .flip-face.state-lime{background:var(--lime);}
+
+  .pill-text{
+    font-family:var(--font-body);
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.2px;
+    font-size:clamp(15px,2.1vw,19px);
+    line-height:1.32;
+  }
+  .state-pink .pill-text{color:#FFFFFF;}
+  .state-lime .pill-text{color:var(--forest);}
+
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="stack" id="stack">
+
+    <div class="flip-face state-pink" data-front="НЕ ОТПУСК РАЗ В ГОД" data-back="А ЧАСТЫЕ ПОЕЗДКИ ПО РАЗНЫМ ПОВОДАМ">
+      <span class="pill-text">НЕ ОТПУСК РАЗ В ГОД</span>
+    </div>
+
+    <div class="flip-face state-pink" data-front="НЕ ПОБЕГ ОТ УСТАЛОСТИ" data-back="А ЧАСТЬ ЖИЗНИ: НЕОБХОДИМАЯ, ПОСТОЯННАЯ, ИНТЕРЕСНАЯ">
+      <span class="pill-text">НЕ ПОБЕГ ОТ УСТАЛОСТИ</span>
+    </div>
+
+    <div class="flip-face state-pink" data-front="НЕ ГОСТИНИЦА" data-back="А ОТЕЛЬ, КОТОРЫЙ САМ ПО СЕБЕ ЧАСТЬ ПРИКЛЮЧЕНИЯ">
+      <span class="pill-text">НЕ ГОСТИНИЦА</span>
+    </div>
+
+    <div class="flip-face state-pink" data-front="НЕ СПИСОК МЕСТ" data-back="А СУБЪЕКТИВНЫЕ, ЛИЧНЫЕ, ТЁПЛЫЕ РЕКОМЕНДАЦИИ">
+      <span class="pill-text">НЕ СПИСОК МЕСТ</span>
+    </div>
+
+    <div class="flip-face state-pink" data-front="НЕ «КУДА НУЖНО ПОЕХАТЬ?»" data-back="А «ЗАЧЕМ?»: ЧТО ТАМ ИНТЕРЕСНОГО, ЧТО ЭТОТ ОПЫТ МНЕ ДАСТ">
+      <span class="pill-text">НЕ «КУДА НУЖНО ПОЕХАТЬ?»</span>
+    </div>
+
+    <div class="flip-face state-pink" data-front="НЕ КОГДА ВСЁ РЕШЕНО" data-back="А КОГДА ХОЧЕТСЯ НАЙТИ ЧТО-ТО ИНТЕРЕСНОЕ, ВДОХНОВИТЬСЯ, НАПОЛНИТЬСЯ">
+      <span class="pill-text">НЕ КОГДА ВСЁ РЕШЕНО</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('.flip-face').forEach(function(el){
+    function toggle(){
+      var isPink = el.classList.contains('state-pink');
+      var textEl = el.querySelector('.pill-text');
+
+      if(isPink){
+        el.classList.remove('state-pink');
+        el.classList.add('state-lime');
+        textEl.textContent = el.getAttribute('data-back');
+      } else {
+        el.classList.remove('state-lime');
+        el.classList.add('state-pink');
+        textEl.textContent = el.getAttribute('data-front');
+      }
+    }
+
+    el.addEventListener('click', toggle);
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
